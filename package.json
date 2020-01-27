@@ -2,12 +2,13 @@
   "name": "Elastic-Beanstalk-Sample-App",
   "version": "0.0.1",
   "private": true,
-    "dependencies": {
-    "ejs": "latest",
+  "dependencies": {
     "aws-sdk": "latest",
-    "express": "latest",
     "body-parser": "latest",
-    "mysql": "latest"
+    "ejs": "latest",
+    "express": "latest",
+    "mariadb": "^2.1.5",
+    "mysql": "^2.17.1"
   },
   "scripts": {
     "start": "node app.js"
