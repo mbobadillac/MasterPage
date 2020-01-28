@@ -1,7 +1,6 @@
 const http = require('http');
 const port = 3000;
 var os = require('os');
-var dns = require("dns");
 os.hostname();
 var fs = require('fs');
 
@@ -30,7 +29,6 @@ const server = http.createServer((req, res) => {
           if (err) throw err;
           res.writeHead(200, {"Content-Type": "text/json"});
     			res.write(JSON.stringify(result));
-          res.end();
 			});
 		    connection.end();
 		}
@@ -39,12 +37,5 @@ const server = http.createServer((req, res) => {
 			log_consola(error);
 		}
 });
-
-dns.lookupService('127.0.0.1', port, (err, hostname, service) => {  
-	console.log("Nombre: "+hostname+" puerto: "+service);  
-	  // Prints: localhost  
-  });
-
 server.listen(port);
-  console.log('Server running'+os.hostname());
-
+console.log('Server running'+os.hostname());
