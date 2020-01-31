@@ -2,87 +2,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Elastic Beanstalk EDITADO</title>
-    <style>
-      body {
-        color: #ffffff;
-        font-family: Arial, sans-serif;
-        font-size:14px;
-        -moz-transition-property: text-shadow;
-        -moz-transition-duration: 4s;
-        -webkit-transition-property: text-shadow;
-        -webkit-transition-duration: 4s;
-        text-shadow: none;
-      }
-      body.blurry {
-        -moz-transition-property: text-shadow;
-        -moz-transition-duration: 4s;
-        -webkit-transition-property: text-shadow;
-        -webkit-transition-duration: 4s;
-        text-shadow: #fff 0px 0px 25px;
-      }
-      a {
-        color: #55aaff;
-      }
-      .textColumn, .linksColumn {
-        padding: 2em;
-      }
-      .textColumn {
-        position: absolute;
-        top: 0px;
-        right: 50%;
-        bottom: 0px;
-        left: 0px;
-
-        text-align: right;
-        padding-top: 11em;
-        background-color: #73A53E;
-
-      }
-      .textColumn p {
-        width: 75%;
-        float:right;
-      }
-      .linksColumn {
-        position: absolute;
-        top:0px;
-        right: 0px;
-        bottom: 0px;
-        left: 50%;
-
-        background-color: #33342D;
-      }
-
-      h1 {
-        color: #33342D;
-        font-size: 500%;
-        font-weight: normal;
-        margin-bottom: 0em;
-      }
-      h2 {
-        font-size: 200%;
-        font-weight: normal;
-        margin-bottom: 0em;
-      }
-      ul {
-        padding-left: 1em;
-        margin: 0px;
-      }
-      li {
-        margin: 1em 0em;
-      }
-    </style>
+    <title>Simulador</title>
   </head>
   <body>
-    <div class="textColumn">
-      <h1>base conectada ok</h1>
-      <p>este es el indice</p>
-    </div>
-    <div class="linksColumn">
-      <h2>What's Next?</h2>
+    <div>
       <ul>
-        <li><a href="http://127.0.0.1:3000">volver</a></li>
+        <li><label>Simulador</label></li>
+        <li><button name="btn_inicia" onclick="carga()">Boton</button></li>
+      </ul>
+      <ul id="listado_log">
+        
       </ul>
     </div>
   </body>
+  <script type="text/javascript">
+    
+    class pokemon 
+    {
+      constructor ( Nombre = "Sin nombre") {
+        this.Nombre = Nombre;
+      }
+    }
+    function carga()
+    {
+      let poke1= new pokemon();
+      let poke2= new pokemon();
+      poke1.Nombre="Poke 1";
+      var contador=100;
+      while(contador>0)
+      {
+        document.getElementById("listado_log").innerHTML += "<li><label>pokemon nombre: "+poke1.Nombre+"</label> </li>";
+        contador=contador-1;
+      }
+    }
+</script> 
 </html>
