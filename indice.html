@@ -5,10 +5,22 @@
     <title>Simulador</title>
   </head>
   <body>
-    <div>
+    <div style="width: 900px;">
       <ul>
-        <li><label>Simulador</label></li>
-        <li><button name="btn_inicia" onclick="carga()">Boton</button></li>
+        <li style="display: initial;"><label>Simulador</label><br></li>
+        <li style="display: initial;">
+          <label style="width: 200px;">Pokemon 1</label>
+          <label id="txt_nombre_poke1">Nombre: </label>
+          <label id="txt_ataque_poke1">Ataque: </label>
+          <label id="txt_velocidad_poke1">Velocidad: </label>
+          <label id="txt_vida_poke1">Vida: </label><br>
+          <label style="width: 200px;">Pokemon 2</label>
+          <label id="txt_nombre_poke2">Nombre: </label>
+          <label id="txt_ataque_poke2">Ataque: </label>
+          <label id="txt_velocidad_poke2">Velocidad: </label>
+          <label id="txt_vida_poke2">Vida: </label><br>
+        </li>
+        <li style="display: initial;"><button name="btn_inicia" onclick="carga()">Boton</button></li style="display: list-item;">
       </ul>
       <ul id="listado_log">
         
@@ -16,23 +28,143 @@
     </div>
   </body>
   <script type="text/javascript">
-    
+    function numeroRandom(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+    function ataque_real(ataque)
+    {
+      var multi=random(0,3);
+      return ataque*multi;
+    }
+    function pad(cadena)
+    {
+        var retorno="";
+        var largo_maximo=20;
+        if(cadena.length<largo_maximo)
+        {
+          retorno=cadena;
+          var largo=cadena.length;
+          for (var i = 0; i < largo_maximo-largo; i++) {
+            retorno+="&nbsp";
+          }
+        }
+        else
+        {
+          retorno=cadena.substring(0,largo_maximo);
+        }
+        return retorno;
+    }
+    function cantidad_vida(cantidad)
+    {
+      var retorno="";
+      for(i=0;i<cantidad;i++)
+      {
+        retorno+="|";
+      }
+      return retorno;
+    }
     class pokemon 
     {
-      constructor ( Nombre = "Sin nombre") {
-        this.Nombre = Nombre;
+      constructor (Nombre) {
+        this.Nombre = pad(Nombre);
+        this.ataque = numeroRandom(10,15);
+        this.velocidad=numeroRandom(5,10);
+        this.Vida=100;
       }
     }
     function carga()
     {
-      let poke1= new pokemon();
-      let poke2= new pokemon();
-      poke1.Nombre="Poke 1";
-      var contador=100;
+      let poke1= new pokemon("Charmander");
+      let poke2= new pokemon("Electbuzz");
+      document.getElementById("txt_nombre_poke1").innerHTML = "Nombre: "+poke1.Nombre;
+      document.getElementById("txt_nombre_poke2").innerHTML = "Nombre: "+poke2.Nombre;
+      document.getElementById("txt_ataque_poke1").innerHTML = "Ataque: "+poke1.ataque;
+      document.getElementById("txt_ataque_poke2").innerHTML = "Ataque: "+poke2.ataque;
+      document.getElementById("txt_velocidad_poke1").innerHTML = "Velocidad: "+poke1.velocidad;
+      document.getElementById("txt_velocidad_poke2").innerHTML = "Velocidad: "+poke2.velocidad;
+      document.getElementById("txt_vida_poke1").innerHTML = "Vida: "+poke1.Vida;
+      document.getElementById("txt_vida_poke2").innerHTML = "Vida: "+poke2.Vida;
+      var contador=1;
+      var fallo="Pero ha fallado";
       while(contador>0)
       {
-        document.getElementById("listado_log").innerHTML += "<li><label>pokemon nombre: "+poke1.Nombre+"</label> </li>";
-        contador=contador-1;
+        var log_combate="";
+        var ataque_rival=0;
+        if(poke1.velocidad>poke2.velocidad)
+        {
+          ataque_rival= numeroRandom(0,poke1.ataque+1);
+          if(ataque_rival>0)
+          {
+            poke2.Vida-=ataque_rival;
+            log_combate=poke1.Nombre+" ataca a "+poke2.Nombre+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+          }
+          else
+          {
+            log_combate=poke1.Nombre+" ataca a "+poke2.Nombre+", "+fallo+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+          }
+          if(poke2.Vida<=0)
+          {
+            contador=0;
+            log_combate+="<br> "+poke2.Nombre+" ha perdido la batalla!!";
+            document.getElementById("listado_log").innerHTML += "<li style='display: initial;'><label>"+log_combate+"</label> </li><br>";
+            break;
+          }
+          ataque_rival= numeroRandom(0,poke2.ataque+1);
+          if(ataque_rival>0)
+          {
+            poke1.Vida-=ataque_rival;
+            log_combate+=poke2.Nombre+" ataca a "+poke1.Nombre+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+          }
+          else
+          {
+            log_combate=poke2.Nombre+" ataca a "+poke1.Nombre+", "+fallo+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+          }
+          if(poke1.Vida<=0)
+          {
+            contador=0;
+            log_combate+="<br> "+poke1.Nombre+" ha perdido la batalla!!";
+            document.getElementById("listado_log").innerHTML += "<li style='display: initial;'><label>"+log_combate+"</label> </li><br>";
+            break;
+          }
+        }
+        else
+        {
+          ataque_rival= numeroRandom(0,poke2.ataque+1);
+          if(ataque_rival>0)
+          {
+            poke1.Vida-=ataque_rival;
+            log_combate=poke2.Nombre+" ataca a "+poke1.Nombre+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+          }
+          else
+          {
+            log_combate=poke2.Nombre+" ataca a "+poke1.Nombre+", "+fallo+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+          }
+          if(poke1.Vida<=0)
+          {
+            contador=0;
+            log_combate+="<br> "+poke1.Nombre+" ha perdido la batalla!!";
+            document.getElementById("listado_log").innerHTML += "<li style='display: initial;'><label>"+log_combate+"</label> </li><br>";
+            break;
+          }
+          ataque_rival= numeroRandom(0,poke1.ataque+1);
+          if(ataque_rival>0)
+          {
+            poke2.Vida-=ataque_rival;
+            log_combate+=poke1.Nombre+" ataca a "+poke2.Nombre+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+          }
+          else
+          {
+            log_combate=poke1.Nombre+" ataca a "+poke2.Nombre+", "+fallo+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+          }
+          if(poke2.Vida<=0)
+          {
+            contador=0;
+            log_combate+=" "+poke2.Nombre+" ha perdido la batalla!!";
+            document.getElementById("listado_log").innerHTML += "<li style='display: initial;'><label>"+log_combate+"</label> </li><br>";
+            break;
+          }
+        }
+        document.getElementById("listado_log").innerHTML += "<li style='display: initial;'><label>"+log_combate+"</label> </li><br>";
       }
     }
 </script> 
