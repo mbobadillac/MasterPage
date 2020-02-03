@@ -33,8 +33,30 @@
     }
     function ataque_real(ataque)
     {
-      var multi=random(0,3);
-      return ataque*multi;
+      var retorno=0;
+      try{
+        var multi=numeroRandom(0,3);
+        switch(multi)  
+        {
+          case 0: 
+          retorno=0;
+          break;
+          case 1:
+          retorno=ataque;
+          break
+          case 2:
+          retorno=ataque+10;
+          break;
+          default:
+          retorno=0;
+          break;
+        }
+      }
+      catch(error)
+      {
+        console.log(error);
+      }
+      return retorno;
     }
     function pad(cadena)
     {
@@ -85,22 +107,30 @@
       document.getElementById("txt_vida_poke1").innerHTML = "Vida: "+poke1.Vida;
       document.getElementById("txt_vida_poke2").innerHTML = "Vida: "+poke2.Vida;
       var contador=1;
-      var fallo="Pero ha fallado";
+      var fallo="Pero ha fallado!!";
+      var critico="Golpe critico!!";
       while(contador>0)
       {
         var log_combate="";
         var ataque_rival=0;
         if(poke1.velocidad>poke2.velocidad)
         {
-          ataque_rival= numeroRandom(0,poke1.ataque+1);
+          ataque_rival=ataque_real(poke1.ataque);
           if(ataque_rival>0)
           {
-            poke2.Vida-=ataque_rival;
-            log_combate=poke1.Nombre+" ataca a "+poke2.Nombre+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+            if(ataque_rival==poke1.ataque)
+            {
+              poke2.Vida-=ataque_rival;
+              log_combate+=poke1.Nombre+" ataca a "+poke2.Nombre+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+            }
+            else
+            {
+              log_combate+=poke1.Nombre+" ataca a "+poke2.Nombre+", "+critico+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+            }
           }
           else
           {
-            log_combate=poke1.Nombre+" ataca a "+poke2.Nombre+", "+fallo+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+            log_combate+=poke1.Nombre+" ataca a "+poke2.Nombre+", "+fallo+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
           }
           if(poke2.Vida<=0)
           {
@@ -109,15 +139,22 @@
             document.getElementById("listado_log").innerHTML += "<li style='display: initial;'><label>"+log_combate+"</label> </li><br>";
             break;
           }
-          ataque_rival= numeroRandom(0,poke2.ataque+1);
+          ataque_rival= ataque_real(poke2.ataque);
           if(ataque_rival>0)
           {
-            poke1.Vida-=ataque_rival;
-            log_combate+=poke2.Nombre+" ataca a "+poke1.Nombre+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+            if(ataque_rival==poke1.ataque)
+            {
+              poke1.Vida-=ataque_rival;
+              log_combate+=poke2.Nombre+" ataca a "+poke1.Nombre+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+            }
+            else
+            {
+              log_combate+=poke2.Nombre+" ataca a "+poke1.Nombre+", "+critico+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+            }
           }
           else
           {
-            log_combate=poke2.Nombre+" ataca a "+poke1.Nombre+", "+fallo+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+            log_combate+=poke2.Nombre+" ataca a "+poke1.Nombre+", "+fallo+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
           }
           if(poke1.Vida<=0)
           {
@@ -129,15 +166,22 @@
         }
         else
         {
-          ataque_rival= numeroRandom(0,poke2.ataque+1);
+          ataque_rival= ataque_real(poke2.ataque);
           if(ataque_rival>0)
           {
-            poke1.Vida-=ataque_rival;
-            log_combate=poke2.Nombre+" ataca a "+poke1.Nombre+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+            if(ataque_rival==poke1.ataque)
+            {
+              poke1.Vida-=ataque_rival;
+              log_combate+=poke2.Nombre+" ataca a "+poke1.Nombre+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+            }
+            else
+            {
+              log_combate+=poke2.Nombre+" ataca a "+poke1.Nombre+", "+critico+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+            }
           }
           else
           {
-            log_combate=poke2.Nombre+" ataca a "+poke1.Nombre+", "+fallo+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
+            log_combate+=poke2.Nombre+" ataca a "+poke1.Nombre+", "+fallo+" vida: "+cantidad_vida(poke1.Vida)+"<br>";
           }
           if(poke1.Vida<=0)
           {
@@ -146,15 +190,22 @@
             document.getElementById("listado_log").innerHTML += "<li style='display: initial;'><label>"+log_combate+"</label> </li><br>";
             break;
           }
-          ataque_rival= numeroRandom(0,poke1.ataque+1);
+          ataque_rival= ataque_real(poke1.ataque);
           if(ataque_rival>0)
           {
-            poke2.Vida-=ataque_rival;
-            log_combate+=poke1.Nombre+" ataca a "+poke2.Nombre+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+            if(ataque_rival==poke1.ataque)
+            {
+              poke2.Vida-=ataque_rival;
+              log_combate+=poke1.Nombre+" ataca a "+poke2.Nombre+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+            }
+            else
+            {
+              log_combate+=poke1.Nombre+" ataca a "+poke2.Nombre+", "+critico+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+            }
           }
           else
           {
-            log_combate=poke1.Nombre+" ataca a "+poke2.Nombre+", "+fallo+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
+            log_combate+=poke1.Nombre+" ataca a "+poke2.Nombre+", "+fallo+" vida: "+cantidad_vida(poke2.Vida)+"<br>";
           }
           if(poke2.Vida<=0)
           {
