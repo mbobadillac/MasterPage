@@ -8,7 +8,7 @@
     "ejs": "latest",
     "express": "latest",
     "mariadb": "^2.1.5",
-    "mysql": "^2.17.1"
+    "mysql": "^2.18.0"
   },
   "scripts": {
     "start": "node app.js"
